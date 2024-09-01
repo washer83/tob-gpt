@@ -11,7 +11,7 @@ class Prayer:
         self.defense_bonus = defense_bonus
 
 class PlayerStats:
-    def __init__(self, attack: int, strength: int, defense: int, magic: int, ranged: int):
+    def __init__(self, attack: int, strength: int, defense: int, magic: int, ranged: int, hp: int):
         self.attack = attack
         self.strength = strength
         self.defense = defense
@@ -39,6 +39,10 @@ class Player:
         self.offensive_stat = offensive_stat
         self.prayer_active = prayer_active
         self.gear = {}
+        self.special_attack_energy = 100
+        self.thrall_active = False
+        self.vengeance_active = False
+        self.attack_cooldown = 0
         self.load_equipment(equipment_file)
 
     def load_equipment(self, equipment_file: str):
@@ -168,7 +172,68 @@ class Player:
         effective_level += 8
 
         return effective_level * (equipment_bonus + 64)
+    
+    def attack(self):
+        """Performs an attack if cooldown allows."""
+        if self.attack_cooldown > 0:
+            print(f"Attack failed. {self.name} is on cooldown for {self.attack_cooldown} more ticks.")
+            return False
 
+        # Reset cooldown based on the weapon's speed
+        weapon = self.gear.get("weapon")
+        if weapon:
+            weapon_speed = next((i['speed'] for i in self.equipment_data if i['name'] == weapon), 4)
+            self.attack_cooldown = weapon_speed
+            print(f"{self.name} attacks with {weapon}! Cooldown set to {weapon_speed} ticks.")
+            return True
+        else:
+            print(f"{self.name} attacks with bare hands! (Default cooldown of 4 ticks)")
+            self.attack_cooldown = 4
+            return True
+
+    def tick(self):
+        """Reduces cooldowns by 1 tick. This should be called every game tick."""
+        if self.attack_cooldown > 0:
+            self.attack_cooldown -= 1
+
+    def use_special_attack(self, energy_cost: int):
+        """Use a special attack, if enough energy."""
+        if self.special_attack_energy >= energy_cost:
+            self.special_attack_energy -= energy_cost
+            print(f"{self.name} used a special attack.")
+            return True
+        else:
+            print(f"{self.name} doesn't have enough energy. Current: {self.special_attack_energy}, requested: {energy_cost}")
+
+    def summon_thrall(self):
+        """Summons a thrall."""
+        self.thrall_active = True
+        print(f"{self.name} has summoned a thrall.")
+
+    def dismiss_thrall(self):
+        """Dismisses active thrall."""
+        self.thrall_active = False
+        print(f"{self.name}'s thrall has been dismissed.")
+
+    def take_damage(self, damage: int):
+        """Reduces player's HP by given damage."""
+        self.hp -= damage
+        if self.vengeance_active:
+            reflected_damage = int(damage*0.75)
+            print(f"{self.name}'s vengeance has been activated.")
+            self.vengeance_active = False
+        if self.hp < 0:
+            self.hp = 0
+            print("he dead.")
+        print(f"{self.name} took {damage}. HP remaining {self.hp}")
+    
+    def heal(self, amount: int):
+        """Heals by a certain amount."""
+        self.hp += amount
+        if self.hp > 99:
+            self.hp = 99
+        print(f"{self.name} healed {amount} HP. Now {self.hp} HP.")
+        
     def calculate_total_bonuses(self):
         total_bonuses = {
             "str": 0,
@@ -210,12 +275,11 @@ class Player:
                 total_defensive[key] += item.get('defensive', {}).get(key, 0)
         return total_defensive
 
-
     def __str__(self):
         return f"Player: {self.name}\n Gear: {self.gear}"
 
 # Example usage:
-player_stats = PlayerStats(attack=118, strength=118, defense=118, magic=112, ranged=112)
+player_stats = PlayerStats(attack=118, strength=118, defense=118, magic=112, ranged=112, hp=121)
 prayer = Prayer(name="Piety", attack_bonus=0.20, strength_bonus=0.23, defense_bonus=0.25)
 player = Player(name="test", stats=player_stats, attack_style=AttackStyle.CONTROLLED, offensive_stat="slash", prayer_active=prayer)
 
@@ -225,3 +289,20 @@ player.equip_item("Bandos tassets")
 print_bonuses(player)
 print_gear(player)
 print_roll(player)
+
+
+# Attack with the weapon, reducing the cooldown
+player.attack()
+
+# Simulate a few game ticks
+for _ in range(3):
+    player.tick()
+    print(f"Tick passed. {player.attack_cooldown} ticks remaining on cooldown.")
+
+# Attempt to attack again
+player.attack()
+
+# Simulate more ticks and attack again
+player.tick()
+player.tick()
+player.attack()
