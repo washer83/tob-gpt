@@ -40,7 +40,9 @@ class Player:
         self.prayer_active = prayer_active
         self.gear = {}
         self.special_attack_energy = 100
+        self.special_regen_ticks = 0  
         self.thrall_active = False
+        self.thrall_ticks = 0
         self.vengeance_active = False
         self.attack_cooldown = 0
         self.load_equipment(equipment_file)
@@ -179,6 +181,11 @@ class Player:
             print(f"Attack failed. {self.name} is on cooldown for {self.attack_cooldown} more ticks.")
             return False
 
+        if self.thrall_active == True and self.thrall_ticks >= 4:
+            print(f"{self.name} can attack with thrall.")
+            #TODO: add thrall hit 
+            self.thrall_ticks = 0
+
         # Reset cooldown based on the weapon's speed
         weapon = self.gear.get("weapon")
         if weapon:
@@ -192,9 +199,27 @@ class Player:
             return True
 
     def tick(self):
-        """Reduces cooldowns by 1 tick. This should be called every game tick."""
+        """Increments tick variables. This should be called every game tick."""
         if self.attack_cooldown > 0:
             self.attack_cooldown -= 1
+
+        self.special_regen_ticks += 1
+        self.regenerate_special_attack()
+
+        self.thrall_ticks += 1
+        #TODO: Add thrall check here
+
+    def regenerate_special_attack(self):
+        """Regenerates special attack in increments of 10% at a time."""
+        lightbearer = 'Lightbearer' in self.gear.values()
+        regen_interval = 50 if lightbearer else 100
+
+        if self.special_regen_ticks >= regen_interval and self.special_attack_energy < 100:
+            self.special_attack_energy += 10
+            self.special_attack_energy = min(self.special_attack_energy, 100) # Cap at 100
+            self.special_regen_ticks = 0
+
+            print(f"{self.name} regenerates special attack energy. Current: {self.special_attack_energy}%")
 
     def use_special_attack(self, energy_cost: int):
         """Use a special attack, if enough energy."""
@@ -208,11 +233,13 @@ class Player:
     def summon_thrall(self):
         """Summons a thrall."""
         self.thrall_active = True
+        self.thrall_ticks = 3 # Thrall should attack next tick after being summoned.
         print(f"{self.name} has summoned a thrall.")
 
     def dismiss_thrall(self):
         """Dismisses active thrall."""
         self.thrall_active = False
+        self.thrall_ticks = 0
         print(f"{self.name}'s thrall has been dismissed.")
 
     def take_damage(self, damage: int):
@@ -281,9 +308,9 @@ class Player:
 # Example usage:
 player_stats = PlayerStats(attack=118, strength=118, defense=118, magic=112, ranged=112, hp=121)
 prayer = Prayer(name="Piety", attack_bonus=0.20, strength_bonus=0.23, defense_bonus=0.25)
-player = Player(name="test", stats=player_stats, attack_style=AttackStyle.CONTROLLED, offensive_stat="slash", prayer_active=prayer)
+player = Player(name="test", stats=player_stats, attack_style=AttackStyle.AGGRESSIVE, offensive_stat="slash", prayer_active=prayer)
 
-player.equip_item("Abyssal whip")
+player.equip_item("Bandos godsword")
 player.equip_item("Bandos tassets")
 
 print_bonuses(player)
