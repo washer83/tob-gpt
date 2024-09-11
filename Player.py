@@ -1,22 +1,41 @@
 import json
+import math
 from pathlib import Path
 from typing import Dict, Optional, Union
 from util.player_info import *
+from util.powered_staves_data import POWERED_STAVES_MAX_HIT
 
 class Prayer:
-    def __init__(self, name: str, attack_bonus: float, strength_bonus: float, defense_bonus: float):
+    def __init__(self, name: str, 
+                 attack_bonus: float = 0.0, strength_bonus: float = 0.0, defense_bonus: float = 0.0, 
+                 ranged_bonus: float = 0.0, ranged_str_bonus: float = 0.0, ranged_def_bonus: float = 0.0, 
+                 magic_bonus: float = 0.0, magic_damage_bonus: float = 0.0, magic_def_bonus: float = 0.0):
         self.name = name
         self.attack_bonus = attack_bonus
         self.strength_bonus = strength_bonus
         self.defense_bonus = defense_bonus
+        self.ranged_bonus = ranged_bonus
+        self.ranged_str_bonus = ranged_str_bonus
+        self.ranged_def_bonus = ranged_def_bonus
+        self.magic_bonus = magic_bonus
+        self.magic_damage_bonus = magic_damage_bonus
+        self.magic_def_bonus = magic_def_bonus
+
+PRAYERS = {
+    "Piety": Prayer(name="Piety", attack_bonus=0.20, strength_bonus=0.23, defense_bonus=0.25),
+    "Chivalry": Prayer(name="Chivalry", attack_bonus=0.15, strength_bonus=0.18, defense_bonus=0.20),
+    "Rigour": Prayer(name="Rigour", ranged_bonus=0.20, ranged_str_bonus=0.23, defense_bonus=0.25),
+    "Augury": Prayer(name="Augury", magic_bonus=0.25, magic_damage_bonus=0.04, magic_def_bonus=0.25),
+    "None": Prayer(name="None")
+}
 
 class PlayerStats:
     def __init__(self, attack: int, strength: int, defense: int, magic: int, ranged: int, hp: int):
-        self.attack = attack
-        self.strength = strength
-        self.defense = defense
-        self.magic = magic
-        self.ranged = ranged
+        self.attack_level = attack
+        self.strength_level = strength
+        self.defense_level = defense
+        self.magic_level = magic
+        self.ranged_level = ranged
 
 class AttackStyle:
     ACCURATE = "Accurate"
@@ -32,12 +51,12 @@ class AttackType:
     MAGIC = "Magic"
 
 class Player:
-    def __init__(self, name: str, stats: PlayerStats, attack_style: str, offensive_stat: str, prayer_active: Optional[Prayer], equipment_file: str = "./resources/equipment.json"):
+    def __init__(self, name: str, stats: PlayerStats, attack_style: str, offensive_stat: str, prayer_name: str = None, equipment_file: str = "./resources/equipment.json"):
         self.name = name
         self.stats = stats
         self.attack_style = attack_style
         self.offensive_stat = offensive_stat
-        self.prayer_active = prayer_active
+        self.prayer_active = PRAYERS.get(prayer_name)
         self.gear = {}
         self.special_attack_energy = 100
         self.special_regen_ticks = 0  
@@ -124,6 +143,17 @@ class Player:
         elif attack_type == AttackType.MAGIC:
             return self.calculate_magic_attack_roll()
         return 0
+    
+    def calculate_max_hit(self) -> int:
+        attack_type = self.get_attack_type()
+        if attack_type == AttackType.MELEE:
+            return self.calculate_melee_max_hit()
+        elif attack_type == AttackType.RANGED:
+            return self.calculate_ranged_max_hit()
+        elif attack_type == AttackType.MAGIC:
+            return self.calculate_magic_max_hit()
+        else:
+            return 0
 
     def calculate_melee_attack_roll(self) -> int:
         """Calculates the melee attack roll."""
@@ -132,7 +162,7 @@ class Player:
             for item in self.gear.values()
         )
         
-        effective_level = self.stats.attack
+        effective_level = self.stats.attack_level
 
         if self.prayer_active:
             effective_level = int(effective_level * (1 + self.prayer_active.attack_bonus))
@@ -149,10 +179,10 @@ class Player:
             for item in self.gear.values()
         )
         
-        effective_level = self.stats.ranged
+        effective_level = self.stats.ranged_level
 
         if self.prayer_active:
-            effective_level = int(effective_level * (1 + self.prayer_active.attack_bonus))
+            effective_level = int(effective_level * (1 + self.prayer_active.ranged_bonus))
 
         effective_level += 3 if self.attack_style == AttackStyle.ACCURATE else 0
         effective_level += 8
@@ -160,21 +190,121 @@ class Player:
         return effective_level * (equipment_bonus + 64)
 
     def calculate_magic_attack_roll(self) -> int:
-        """Calculates the magic attack roll."""
-        equipment_bonus = sum(
-            next((i['offensive']['magic'] for i in self.equipment_data if i['name'] == item), 0)
-            for item in self.gear.values()
-        )
-        
-        effective_level = self.stats.magic
+        """Calculates the magic attack roll, applying special effects for Tumeken's Shadow."""
+        # Check if Tumeken's Shadow is equipped
+        tumeken_equipped = "Tumeken's shadow" in self.gear.values()
 
-        if self.prayer_active:
-            effective_level = int(effective_level * (1 + self.prayer_active.attack_bonus))
+        # Calculate magic equipment bonus, applying 3x for all gear except Tumeken's Shadow
+        equipment_bonus = 0
+        for item in self.gear.values():
+            item_data = next((i for i in self.equipment_data if i['name'] == item), None)
+            if item_data:
+                # If Tumeken's Shadow is equipped, multiply other gear's magic bonus by 3
+                if tumeken_equipped:
+                    equipment_bonus += 3 * item_data.get('offensive', {}).get('magic', 0)
+                else:
+                    equipment_bonus += item_data.get('offensive', {}).get('magic', 0)
 
-        effective_level += 8
+        # Calculate the effective magic level
+        if self.prayer_active and self.prayer_active.magic_bonus:
+            effective_level = math.floor(self.stats.magic_level * (1 + self.prayer_active.magic_bonus))
+        else:
+            effective_level = self.stats.magic_level
+
+        # Add the attack style bonus (Accurate style for magic, e.g., +2 bonus)
+        if self.attack_style == AttackStyle.ACCURATE:
+            effective_level += 2
+
+        # Add flat magic level bonuses (e.g., +9 for magic)
+        effective_level += 9
+        effective_level = math.floor(effective_level)
 
         return effective_level * (equipment_bonus + 64)
     
+    def calculate_melee_max_hit(self) -> int:
+        str_level = self.stats.strength_level
+        
+        if self.prayer_active.strength_bonus:
+            prayer_modifier = (1 + self.prayer_active.strength_bonus)
+        else: 
+            prayer_modifier = 1
+
+        effective_str_level = math.floor(str_level * prayer_modifier)
+        
+        if self.attack_style == AttackStyle.AGGRESSIVE:
+            style_bonus = 3
+        elif self.attack_style == AttackStyle.CONTROLLED:
+            style_bonus = 1
+        else: 
+            style_bonus = 0
+
+        #TODO add void
+        effective_str_level = math.floor(effective_str_level + style_bonus + 8)
+
+        str_bonus = sum(
+            next((i['bonuses'].get('str', 0) for i in self.equipment_data if i['name'] == item), 0)
+            for item in self.gear.values()
+        )
+
+        final_max_hit = (((effective_str_level * (str_bonus + 64)) + 320)/640)
+        return math.floor(final_max_hit)
+
+    def calculate_ranged_max_hit(self) -> int:
+        """Calculates the max ranged hit for whatever idk who cares"""
+        effective_ranged_str = self.stats.ranged_level
+
+        if self.prayer_active.ranged_str_bonus:
+            prayer_bonus = 1 + self.prayer_active.ranged_str_bonus
+        else:
+            prayer_bonus = 1
+        
+        attack_style_bonus = 3 if self.attack_style == AttackStyle.ACCURATE else 0
+
+        #TODO add void and tbow
+        effective_ranged_str = (self.stats.ranged_level * prayer_bonus) + attack_style_bonus + 8
+
+        ranged_strength_bonus = sum(
+            next((i['bonuses'].get('ranged_str', 0) for i in self.equipment_data if i['name'] == item), 0)
+            for item in self.gear.values()
+        )
+
+        final_max_hit = 0.5 + ((effective_ranged_str * (ranged_strength_bonus + 64))/640)
+        return math.floor(final_max_hit)
+
+    def calculate_magic_max_hit(self) -> int:
+        """Calculates the max magic hit for powered staves based on the player's magic level."""
+        
+        # Get the equipped weapon (powered staff)
+        staff_name = self.gear.get("weapon")
+        
+        if not staff_name:  # Adjust to start from level 85
+            raise ValueError(f"Weapon '{staff_name}' is not a powered staff.")
+
+        # Fetch the player's current magic level
+        magic_level = self.stats.magic_level
+
+        # Get the base max hit from the lookup table, making sure the magic level is within bounds
+        max_hit = POWERED_STAVES_MAX_HIT.get(min(magic_level, 125), {}).get(staff_name, 0)
+
+        # Calculate the magic strength bonus from gear (such as Ancestral gear)
+        magic_strength_bonus = sum(
+            next((i['bonuses'].get('magic_str', 0) for i in self.equipment_data if i['name'] == item), 0)
+            for item in self.gear.values()
+        )
+
+        magic_strength_bonus = magic_strength_bonus / 10
+  
+        # If Tumeken's Shadow is equipped, triple the magic strength bonus
+        if staff_name == "Tumeken's shadow":
+            magic_strength_bonus *= 3
+
+        if self.prayer_active.magic_damage_bonus:
+            magic_strength_bonus += (self.prayer_active.magic_damage_bonus*100)
+
+        final_max_hit = max_hit * (1 + (magic_strength_bonus/100))
+
+        return math.floor(final_max_hit)
+
     def attack(self):
         """Performs an attack if cooldown allows."""
         if self.attack_cooldown > 0:
@@ -307,17 +437,24 @@ class Player:
 
 # Example usage:
 player_stats = PlayerStats(attack=118, strength=118, defense=118, magic=112, ranged=112, hp=121)
-prayer = Prayer(name="Piety", attack_bonus=0.20, strength_bonus=0.23, defense_bonus=0.25)
-player = Player(name="test", stats=player_stats, attack_style=AttackStyle.AGGRESSIVE, offensive_stat="slash", prayer_active=prayer)
 
-player.equip_item("Bandos godsword")
-player.equip_item("Bandos tassets")
+player = Player(name="TestPlayer", 
+                stats=player_stats, 
+                attack_style=AttackStyle.AGGRESSIVE, 
+                offensive_stat="slash", 
+                prayer_name="Piety")
 
-print_bonuses(player)
+player.equip_item("Scythe of vitur")
+player.equip_item("Ancestral hat")
+player.equip_item("Ancestral robe top")
+player.equip_item("Ancestral robe bottom")
+
+#print_bonuses(player)
 print_gear(player)
 print_roll(player)
+print_max(player)
 
-
+"""
 # Attack with the weapon, reducing the cooldown
 player.attack()
 
@@ -333,3 +470,4 @@ player.attack()
 player.tick()
 player.tick()
 player.attack()
+"""
