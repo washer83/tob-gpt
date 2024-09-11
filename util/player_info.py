@@ -36,15 +36,20 @@ def print_bonuses(player):
 
 
 def print_gear(player):
-    print("\n\n+-----------------+------------------+")
-    print("|      Slot       |       Item       |")
-    print("+-----------------+------------------+")
+    print("\n\n+-----------------+------------------------+")
+    print("|      Slot       |         Item           |")
+    print("+-----------------+------------------------+")
     for slot, item_name in player.gear.items():
-        print(f"| {slot:<15} | {item_name:>16} |")
-    print("+-----------------+------------------+")
+        print(f"| {slot:<15} | {item_name:<22} |")
+    print("+-----------------+------------------------+")
 
 
 def print_roll(player):
-    print("\n\n+-------------+--------+")
-    print(f"| Attack Roll |  {player.calculate_attack_roll():>5} |")
-    print("+-------------+--------+")
+    print("\n\n+-------------+---------+")
+    print(f"| Attack Roll |  {player.calculate_attack_roll():>6} |")
+    print("+-------------+---------+")
+
+def print_max(player):
+    print("\n\n+---------+--------+")
+    print(f"| Max Hit | {player.calculate_max_hit():>6} |")
+    print("+---------+--------+")
