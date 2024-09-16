@@ -307,6 +307,7 @@ class Player:
 
     def attack(self):
         """Performs an attack if cooldown allows."""
+        #print("Inside of attack field.")
         if self.attack_cooldown > 0:
             print(f"Attack failed. {self.name} is on cooldown for {self.attack_cooldown} more ticks.")
             return False
@@ -319,14 +320,23 @@ class Player:
         # Reset cooldown based on the weapon's speed
         weapon = self.gear.get("weapon")
         if weapon:
-            weapon_speed = next((i['speed'] for i in self.equipment_data if i['name'] == weapon), 4)
-            self.attack_cooldown = weapon_speed
-            print(f"{self.name} attacks with {weapon}! Cooldown set to {weapon_speed} ticks.")
+            self.attack_cooldown = self.get_weapon_speed()
+            #print(f"{self.name} attacks with {weapon}! Cooldown set to {self.attack_cooldown} ticks.")
             return True
         else:
-            print(f"{self.name} attacks with bare hands! (Default cooldown of 4 ticks)")
+            #print(f"{self.name} attacks with bare hands! (Default cooldown of 4 ticks)")
             self.attack_cooldown = 4
             return True
+
+    def get_weapon_speed(self):
+        """Returns the speed (in ticks) of the currently equipped weapon."""
+        weapon = self.gear.get("weapon", None)
+        if not weapon:
+            return 4  # Default to 4-tick speed for bare hands
+        
+        # Assuming your equipment data has a 'speed' attribute for each weapon
+        return next((i['speed'] for i in self.equipment_data if i['name'] == weapon), 4)
+
 
     def tick(self):
         """Increments tick variables. This should be called every game tick."""
@@ -435,6 +445,7 @@ class Player:
     def __str__(self):
         return f"Player: {self.name}\n Gear: {self.gear}"
 
+"""
 # Example usage:
 player_stats = PlayerStats(attack=118, strength=118, defense=118, magic=112, ranged=112, hp=121)
 
@@ -454,7 +465,7 @@ print_gear(player)
 print_roll(player)
 print_max(player)
 
-"""
+
 # Attack with the weapon, reducing the cooldown
 player.attack()
 
