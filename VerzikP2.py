@@ -24,7 +24,7 @@ class VerzikP2:
 
         self.reds_threshold = int(math.floor(self.base_hp * 0.35))
         self.phase_active = True
-        self.attack_cooldown_ticks = 4
+        self.attack_cooldown_ticks = 3
         self.lightning_damage = 20  # Fixed lightning attack damage
         self.current_attack_count = 0  # To track attacks for the cycle (CCCCL)
         self.attack_pattern = ['C', 'C', 'C', 'C', 'L']  # C = cabbage, L = lightning
@@ -35,7 +35,8 @@ class VerzikP2:
     def take_damage(self, damage: int):
         self.hp -= damage
         self.hp = max(0, self.hp)
-        print(f"Verzik takes {damage} damage. HP left: {self.hp}")
+        if damage > 0:
+            print(f"Verzik takes {damage} damage. HP left: {self.hp}")
         return self.hp <= 0
     
     # Defense rolls per style
@@ -43,11 +44,11 @@ class VerzikP2:
         defense_roll = (self.defence_lvl + 9) * (self.slash_def + 64)
         return defense_roll
     
-    def ranged_def_roll(self):
+    def ranged_defense_roll(self):
         defense_roll = (self.defence_lvl + 9) * (self.ranged_def + 64)
         return defense_roll
     
-    def magic_def_roll(self):
+    def magic_defense_roll(self):
         defense_roll = (self.magic_lvl + 9) * (self.magic_def + 64)
         return defense_roll
 
@@ -98,6 +99,7 @@ class VerzikP2:
         """Check if phase 2 is still active."""
         return self.phase_active  # Return the phase's active status  
 
+"""
 verzik = VerzikP2(scale=3)
 
 tick = 0
@@ -112,3 +114,4 @@ while verzik.is_phase_active():
     if not verzik.is_phase_active():
         print("!!! Reds Spawned !!!\n")
         print(f"HP Proc: {verzik.hp/verzik.base_hp * 100}%")
+"""
