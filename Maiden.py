@@ -16,7 +16,7 @@ class Maiden:
             self.nylocas_spawn_count = 8
         else: 
             self.max_health = 2625
-            self.nylocas_spawn_count = 6
+            self.nylocas_spawn_count = scale*2
 
         self.current_health = self.max_health
         self.current_phase = 0 # Pre-70s proc
