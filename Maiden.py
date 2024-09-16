@@ -11,7 +11,7 @@ class Maiden:
         if scale == 5:
             self.max_health = 3500
             self.nylocas_spawn_count = 10
-        if scale == 4:
+        elif scale == 4:
             self.max_health = 3062
             self.nylocas_spawn_count = 8
         else: 
