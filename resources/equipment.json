@@ -9000,6 +9000,66 @@
     "isTwoHanded": false
   },
   {
+    "name": "Amulet of rancour",
+    "id": 29801,
+    "version": "",
+    "slot": "neck",
+    "image": "Amulet of rancour.png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 12,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 2
+    },
+    "offensive": {
+      "stab": 25,
+      "slash": 25,
+      "crush": 25,
+      "magic": -6,
+      "ranged": -8
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Amulet of rancour (s)",
+    "id": 29804,
+    "version": "",
+    "slot": "neck",
+    "image": "Amulet of rancour (s).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 12,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 2
+    },
+    "offensive": {
+      "stab": 25,
+      "slash": 25,
+      "crush": 25,
+      "magic": -6,
+      "ranged": -8
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
     "name": "Amulet of strength",
     "id": 1725,
     "version": "",
@@ -9300,6 +9360,36 @@
     "isTwoHanded": false
   },
   {
+    "name": "Amy's saw (off-hand)",
+    "id": 29774,
+    "version": "",
+    "slot": "shield",
+    "image": "Amy's saw (off-hand).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 0,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
     "name": "Ancestral hat",
     "id": 21018,
     "version": "",
@@ -9371,6 +9461,36 @@
       "str": 0,
       "ranged_str": 0,
       "magic_str": 30,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 26,
+      "ranged": -7
+    },
+    "defensive": {
+      "stab": 27,
+      "slash": 24,
+      "crush": 30,
+      "magic": 20,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Ancestral robe bottom (Last Man Standing)",
+    "id": 27194,
+    "version": "",
+    "slot": "Legs",
+    "image": "Ancestral robe bottom (Last Man Standing).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 0,
+      "ranged_str": 0,
+      "magic_str": 40,
       "prayer": 0
     },
     "offensive": {
@@ -11096,6 +11216,156 @@
       "crush": 0,
       "magic": 10,
       "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Aranea boots",
+    "id": 29806,
+    "version": "",
+    "slot": "feet",
+    "image": "Aranea boots.png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 4,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 1
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 5,
+      "ranged": 6
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Araxyte slayer helmet",
+    "id": 29816,
+    "version": "",
+    "slot": "head",
+    "image": "Araxyte slayer helmet.png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 0,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": -6,
+      "ranged": -2
+    },
+    "defensive": {
+      "stab": 30,
+      "slash": 32,
+      "crush": 27,
+      "magic": -1,
+      "ranged": 30
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Araxyte slayer helmet (i)",
+    "id": 29822,
+    "version": "Emir's Arena",
+    "slot": "head",
+    "image": "Araxyte slayer helmet (i).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 0,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 3,
+      "ranged": 3
+    },
+    "defensive": {
+      "stab": 30,
+      "slash": 32,
+      "crush": 27,
+      "magic": 10,
+      "ranged": 30
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Araxyte slayer helmet (i)",
+    "id": 29818,
+    "version": "",
+    "slot": "head",
+    "image": "Araxyte slayer helmet (i).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 0,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 3,
+      "ranged": 3
+    },
+    "defensive": {
+      "stab": 30,
+      "slash": 32,
+      "crush": 27,
+      "magic": 10,
+      "ranged": 30
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Araxyte slayer helmet (i)",
+    "id": 29820,
+    "version": "Soul Wars",
+    "slot": "head",
+    "image": "Araxyte slayer helmet (i).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 0,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 3,
+      "ranged": 3
+    },
+    "defensive": {
+      "stab": 30,
+      "slash": 32,
+      "crush": 27,
+      "magic": 10,
+      "ranged": 30
     },
     "isTwoHanded": false
   },
@@ -12868,6 +13138,36 @@
       "ranged": 0
     },
     "isTwoHanded": false
+  },
+  {
+    "name": "Atlatl dart (Last Man Standing)",
+    "id": 29852,
+    "version": "",
+    "slot": "weapon",
+    "image": "Eclipse atlatl (Last Man Standing).png",
+    "speed": 4,
+    "category": "Bow",
+    "bonuses": {
+      "str": 40,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 87
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": true
   },
   {
     "name": "Attack cape",
@@ -21090,6 +21390,36 @@
     "isTwoHanded": false
   },
   {
+    "name": "Blood moon chestplate (Last Man Standing)",
+    "id": 29846,
+    "version": "",
+    "slot": "body",
+    "image": "Blood moon chestplate (Last Man Standing).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 4,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": -15,
+      "ranged": -10
+    },
+    "defensive": {
+      "stab": 60,
+      "slash": 80,
+      "crush": 80,
+      "magic": 40,
+      "ranged": 79
+    },
+    "isTwoHanded": false
+  },
+  {
     "name": "Blood moon helm",
     "id": 29073,
     "version": "Broken",
@@ -21155,6 +21485,36 @@
     "version": "Used",
     "slot": "head",
     "image": "Blood moon helm (used).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 4,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": -6,
+      "ranged": -2
+    },
+    "defensive": {
+      "stab": 20,
+      "slash": 31,
+      "crush": 34,
+      "magic": 7,
+      "ranged": 29
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Blood moon helm (Last Man Standing)",
+    "id": 29848,
+    "version": "",
+    "slot": "head",
+    "image": "Blood moon helm (Last Man Standing).png",
     "speed": 0,
     "category": "",
     "bonuses": {
@@ -21251,6 +21611,36 @@
       "str": 2,
       "ranged_str": 0,
       "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": -21,
+      "ranged": -7
+    },
+    "defensive": {
+      "stab": 30,
+      "slash": 50,
+      "crush": 49,
+      "magic": 32,
+      "ranged": 46
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Blood moon tassets (Last Man Standing)",
+    "id": 29847,
+    "version": "",
+    "slot": "legs",
+    "image": "Blood moon tassets (Last Man Standing).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 2,
+      "ranged_str": 0,
+      "magic_str": null,
       "prayer": 0
     },
     "offensive": {
@@ -22350,6 +22740,36 @@
     "isTwoHanded": false
   },
   {
+    "name": "Blue moon chestplate (Last Man Standing)",
+    "id": 29843,
+    "version": "",
+    "slot": "body",
+    "image": "Blue moon chestplate (Last Man Standing).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 2,
+      "ranged_str": 0,
+      "magic_str": 10,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 30,
+      "ranged": 0
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 51,
+      "magic": 28,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
     "name": "Blue moon helm",
     "id": 29064,
     "version": "Broken",
@@ -22440,11 +22860,71 @@
     "isTwoHanded": false
   },
   {
+    "name": "Blue moon helm (Last Man Standing)",
+    "id": 29845,
+    "version": "",
+    "slot": "head",
+    "image": "Blue moon helm (Last Man Standing).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 3,
+      "ranged_str": 0,
+      "magic_str": 10,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 6,
+      "ranged": 0
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 10,
+      "magic": 6,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
     "name": "Blue moon spear",
     "id": 28988,
     "version": "",
     "slot": "weapon",
     "image": "Blue moon spear.png",
+    "speed": 5,
+    "category": "Bladed Staff",
+    "bonuses": {
+      "str": 71,
+      "ranged_str": 0,
+      "magic_str": 50,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 70,
+      "slash": 62,
+      "crush": 62,
+      "magic": 30,
+      "ranged": 0
+    },
+    "defensive": {
+      "stab": 2,
+      "slash": 3,
+      "crush": 1,
+      "magic": 15,
+      "ranged": 0
+    },
+    "isTwoHanded": true
+  },
+  {
+    "name": "Blue moon spear (Last Man Standing)",
+    "id": 29849,
+    "version": "",
+    "slot": "weapon",
+    "image": "Blue moon spear (Last Man Standing).png",
     "speed": 5,
     "category": "Bladed Staff",
     "bonuses": {
@@ -22535,6 +23015,36 @@
     "version": "Used",
     "slot": "legs",
     "image": "Blue moon tassets (used).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 1,
+      "ranged_str": 0,
+      "magic_str": 10,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 22,
+      "ranged": 0
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 23,
+      "magic": 32,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Blue moon tassets (Last Man Standing)",
+    "id": 29844,
+    "version": "",
+    "slot": "legs",
+    "image": "Blue moon tassets (Last Man Standing).png",
     "speed": 0,
     "category": "",
     "bonuses": {
@@ -29467,6 +29977,36 @@
     "image": "Bruma torch.png",
     "speed": 4,
     "category": "Unarmed",
+    "bonuses": {
+      "str": 0,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Bruma torch (off-hand)",
+    "id": 29777,
+    "version": "",
+    "slot": "shield",
+    "image": "Bruma torch (off-hand).png",
+    "speed": 0,
+    "category": "",
     "bonuses": {
       "str": 0,
       "ranged_str": 0,
@@ -44673,7 +45213,7 @@
     "name": "Defensive shield",
     "id": 8856,
     "version": "",
-    "slot": "weapon",
+    "slot": "shield",
     "image": "Defensive shield.png",
     "speed": 0,
     "category": "",
@@ -44697,7 +45237,7 @@
       "magic": 0,
       "ranged": 7
     },
-    "isTwoHanded": true
+    "isTwoHanded": false
   },
   {
     "name": "Demon feet",
@@ -51240,6 +51780,36 @@
     "isTwoHanded": true
   },
   {
+    "name": "Dual macuahuitl (Last Man Standing)",
+    "id": 29850,
+    "version": "",
+    "slot": "weapon",
+    "image": "Dual macuahuitl (Last Man Standing).png",
+    "speed": 4,
+    "category": "Spiked",
+    "bonuses": {
+      "str": 81,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 115,
+      "slash": -4,
+      "crush": 121,
+      "magic": -4,
+      "ranged": 0
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": true
+  },
+  {
     "name": "Dual sai",
     "id": 23206,
     "version": "",
@@ -51660,6 +52230,36 @@
     "isTwoHanded": true
   },
   {
+    "name": "Eclipse atlatl (Last Man Standing)",
+    "id": 29851,
+    "version": "",
+    "slot": "weapon",
+    "image": "Eclipse atlatl (Last Man Standing).png",
+    "speed": 4,
+    "category": "Bow",
+    "bonuses": {
+      "str": 40,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 87
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": true
+  },
+  {
     "name": "Eclipse moon chestplate",
     "id": 29049,
     "version": "Broken",
@@ -51725,6 +52325,36 @@
     "version": "Used",
     "slot": "body",
     "image": "Eclipse moon chestplate (used).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 3,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": -15,
+      "ranged": 31
+    },
+    "defensive": {
+      "stab": 15,
+      "slash": 18,
+      "crush": 57,
+      "magic": 55,
+      "ranged": 32
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Eclipse moon chestplate (Last Man Standing)",
+    "id": 29840,
+    "version": "",
+    "slot": "body",
+    "image": "Eclipse moon chestplate (Last Man Standing).png",
     "speed": 0,
     "category": "",
     "bonuses": {
@@ -51840,6 +52470,36 @@
     "isTwoHanded": false
   },
   {
+    "name": "Eclipse moon helm (Last Man Standing)",
+    "id": 29842,
+    "version": "",
+    "slot": "head",
+    "image": "Eclipse moon helm (Last Man Standing).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 3,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": -6,
+      "ranged": 8
+    },
+    "defensive": {
+      "stab": 2,
+      "slash": 3,
+      "crush": 14,
+      "magic": 10,
+      "ranged": 4
+    },
+    "isTwoHanded": false
+  },
+  {
     "name": "Eclipse moon tassets",
     "id": 29052,
     "version": "Broken",
@@ -51905,6 +52565,36 @@
     "version": "Used",
     "slot": "legs",
     "image": "Eclipse moon tassets (used).png",
+    "speed": 0,
+    "category": "",
+    "bonuses": {
+      "str": 1,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": -15,
+      "ranged": 17
+    },
+    "defensive": {
+      "stab": 9,
+      "slash": 13,
+      "crush": 37,
+      "magic": 31,
+      "ranged": 17
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Eclipse moon tassets (Last Man Standing)",
+    "id": 29841,
+    "version": "",
+    "slot": "legs",
+    "image": "Eclipse moon tassets (Last Man Standing).png",
     "speed": 0,
     "category": "",
     "bonuses": {
@@ -63961,10 +64651,10 @@
   },
   {
     "name": "Granite maul",
-    "id": 4153,
-    "version": "Normal",
+    "id": 12848,
+    "version": "Clamp",
     "slot": "weapon",
-    "image": "Granite maul.png",
+    "image": "Granite maul (clamp).png",
     "speed": 7,
     "category": "Blunt",
     "bonuses": {
@@ -63991,10 +64681,10 @@
   },
   {
     "name": "Granite maul",
-    "id": 24225,
-    "version": "Ornate handle",
+    "id": 4153,
+    "version": "Normal",
     "slot": "weapon",
-    "image": "Granite maul (ornate handle).png",
+    "image": "Granite maul.png",
     "speed": 7,
     "category": "Blunt",
     "bonuses": {
@@ -64050,11 +64740,11 @@
     "isTwoHanded": true
   },
   {
-    "name": "Granite maul (or)",
-    "id": 12848,
-    "version": "Normal",
+    "name": "Granite maul (ornate handle)",
+    "id": 24227,
+    "version": "Clamp",
     "slot": "weapon",
-    "image": "Granite maul (or).png",
+    "image": "Granite maul (ornate handle, clamp).png",
     "speed": 7,
     "category": "Blunt",
     "bonuses": {
@@ -64080,11 +64770,11 @@
     "isTwoHanded": true
   },
   {
-    "name": "Granite maul (or)",
-    "id": 24227,
-    "version": "Ornate handle",
+    "name": "Granite maul (ornate handle)",
+    "id": 24225,
+    "version": "Normal",
     "slot": "weapon",
-    "image": "Granite maul (or) (ornate handle).png",
+    "image": "Granite maul (ornate handle).png",
     "speed": 7,
     "category": "Blunt",
     "bonuses": {
@@ -72247,6 +72937,36 @@
     "image": "Imcando hammer.png",
     "speed": 6,
     "category": "Blunt",
+    "bonuses": {
+      "str": 0,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": false
+  },
+  {
+    "name": "Imcando hammer (off-hand)",
+    "id": 29775,
+    "version": "",
+    "slot": "shield",
+    "image": "Imcando hammer (off-hand).png",
+    "speed": 0,
+    "category": "",
     "bonuses": {
       "str": 0,
       "ranged_str": 0,
@@ -89130,6 +89850,36 @@
     "isTwoHanded": false
   },
   {
+    "name": "Noxious halberd",
+    "id": 29796,
+    "version": "",
+    "slot": "weapon",
+    "image": "Noxious halberd.png",
+    "speed": 5,
+    "category": "Polearm",
+    "bonuses": {
+      "str": 142,
+      "ranged_str": 0,
+      "magic_str": 0,
+      "prayer": 0
+    },
+    "offensive": {
+      "stab": 80,
+      "slash": 132,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "defensive": {
+      "stab": 0,
+      "slash": 0,
+      "crush": 0,
+      "magic": 0,
+      "ranged": 0
+    },
+    "isTwoHanded": true
+  },
+  {
     "name": "Nunchaku",
     "id": 19918,
     "version": "",
@@ -90155,7 +90905,7 @@
     "version": "",
     "slot": "weapon",
     "image": "Oily pearl fishing rod.png",
-    "speed": 5,
+    "speed": 4,
     "category": "Unarmed",
     "bonuses": {
       "str": 0,
@@ -91295,7 +92045,7 @@
     "version": "",
     "slot": "weapon",
     "image": "Pearl barbarian rod.png",
-    "speed": 5,
+    "speed": 4,
     "category": "Unarmed",
     "bonuses": {
       "str": 0,
@@ -91445,7 +92195,7 @@
     "version": "",
     "slot": "weapon",
     "image": "Pearl fishing rod.png",
-    "speed": 5,
+    "speed": 4,
     "category": "Unarmed",
     "bonuses": {
       "str": 0,
@@ -91475,7 +92225,7 @@
     "version": "",
     "slot": "weapon",
     "image": "Pearl fly fishing rod.png",
-    "speed": 5,
+    "speed": 4,
     "category": "Unarmed",
     "bonuses": {
       "str": 0,
