@@ -1,33 +1,12 @@
 import json
 import math
+import random
+from Prayer import Prayer, PRAYERS
+from AttackTypes import AttackStyle, AttackType
 from pathlib import Path
 from typing import Dict, Optional, Union
 from util.player_info import *
 from util.powered_staves_data import POWERED_STAVES_MAX_HIT
-
-class Prayer:
-    def __init__(self, name: str, 
-                 attack_bonus: float = 0.0, strength_bonus: float = 0.0, defense_bonus: float = 0.0, 
-                 ranged_bonus: float = 0.0, ranged_str_bonus: float = 0.0, ranged_def_bonus: float = 0.0, 
-                 magic_bonus: float = 0.0, magic_damage_bonus: float = 0.0, magic_def_bonus: float = 0.0):
-        self.name = name
-        self.attack_bonus = attack_bonus
-        self.strength_bonus = strength_bonus
-        self.defense_bonus = defense_bonus
-        self.ranged_bonus = ranged_bonus
-        self.ranged_str_bonus = ranged_str_bonus
-        self.ranged_def_bonus = ranged_def_bonus
-        self.magic_bonus = magic_bonus
-        self.magic_damage_bonus = magic_damage_bonus
-        self.magic_def_bonus = magic_def_bonus
-
-PRAYERS = {
-    "Piety": Prayer(name="Piety", attack_bonus=0.20, strength_bonus=0.23, defense_bonus=0.25),
-    "Chivalry": Prayer(name="Chivalry", attack_bonus=0.15, strength_bonus=0.18, defense_bonus=0.20),
-    "Rigour": Prayer(name="Rigour", ranged_bonus=0.20, ranged_str_bonus=0.23, defense_bonus=0.25),
-    "Augury": Prayer(name="Augury", magic_bonus=0.25, magic_damage_bonus=0.04, magic_def_bonus=0.25),
-    "None": Prayer(name="None")
-}
 
 class PlayerStats:
     def __init__(self, attack: int, strength: int, defense: int, magic: int, ranged: int, hp: int):
@@ -36,19 +15,6 @@ class PlayerStats:
         self.defense_level = defense
         self.magic_level = magic
         self.ranged_level = ranged
-
-class AttackStyle:
-    ACCURATE = "Accurate"
-    AGGRESSIVE = "Aggressive"
-    DEFENSIVE = "Defensive"
-    CONTROLLED = "Controlled"
-    RAPID = "Rapid"
-    LONGRANGE = "Longrange"
-
-class AttackType:
-    MELEE = "Melee"
-    RANGED = "Ranged"
-    MAGIC = "Magic"
 
 class Player:
     def __init__(self, name: str, stats: PlayerStats, attack_style: str, offensive_stat: str, prayer_name: str = None, equipment_file: str = "./resources/equipment.json"):
@@ -62,7 +28,9 @@ class Player:
         self.special_regen_ticks = 0  
         self.thrall_active = False
         self.thrall_ticks = 0
+        self.thrall_attack_cooldown = 4
         self.vengeance_active = False
+        self.vengeance_cooldown = 50
         self.attack_cooldown = 0
         self.load_equipment(equipment_file)
 
@@ -309,13 +277,12 @@ class Player:
         """Performs an attack if cooldown allows."""
         #print("Inside of attack field.")
         if self.attack_cooldown > 0:
-            print(f"Attack failed. {self.name} is on cooldown for {self.attack_cooldown} more ticks.")
+            #print(f"Attack failed. {self.name} is on cooldown for {self.attack_cooldown} more ticks.")
             return False
 
-        if self.thrall_active == True and self.thrall_ticks >= 4:
-            print(f"{self.name} can attack with thrall.")
-            #TODO: add thrall hit 
-            self.thrall_ticks = 0
+        if self.thrall_active and self.thrall_ticks >= self.thrall_attack_cooldown:
+            self.thrall_attack()
+            self.thrall_ticks = 0  # Reset thrall's attack cooldown
 
         # Reset cooldown based on the weapon's speed
         weapon = self.gear.get("weapon")
@@ -328,6 +295,12 @@ class Player:
             self.attack_cooldown = 4
             return True
 
+    def thrall_attack(self):
+        """Simulates the thralls attack."""
+        thrall_damage = random.randint(0, 3)
+        #print(f"{self.name}'s thrall hit for {thrall_damage} damage.")
+        return thrall_damage
+    
     def get_weapon_speed(self):
         """Returns the speed (in ticks) of the currently equipped weapon."""
         weapon = self.gear.get("weapon", None)
@@ -345,8 +318,9 @@ class Player:
 
         self.special_regen_ticks += 1
         self.regenerate_special_attack()
-
-        self.thrall_ticks += 1
+        
+        if self.thrall_active:
+            self.thrall_ticks += 1
         #TODO: Add thrall check here
 
     def regenerate_special_attack(self):
@@ -374,13 +348,13 @@ class Player:
         """Summons a thrall."""
         self.thrall_active = True
         self.thrall_ticks = 3 # Thrall should attack next tick after being summoned.
-        print(f"{self.name} has summoned a thrall.")
+        #print(f"{self.name} has summoned a thrall.")
 
     def dismiss_thrall(self):
         """Dismisses active thrall."""
         self.thrall_active = False
         self.thrall_ticks = 0
-        print(f"{self.name}'s thrall has been dismissed.")
+        #print(f"{self.name}'s thrall has been dismissed.")
 
     def take_damage(self, damage: int):
         """Reduces player's HP by given damage."""
@@ -444,41 +418,3 @@ class Player:
 
     def __str__(self):
         return f"Player: {self.name}\n Gear: {self.gear}"
-
-"""
-# Example usage:
-player_stats = PlayerStats(attack=118, strength=118, defense=118, magic=112, ranged=112, hp=121)
-
-player = Player(name="TestPlayer", 
-                stats=player_stats, 
-                attack_style=AttackStyle.AGGRESSIVE, 
-                offensive_stat="slash", 
-                prayer_name="Piety")
-
-player.equip_item("Scythe of vitur")
-player.equip_item("Ancestral hat")
-player.equip_item("Ancestral robe top")
-player.equip_item("Ancestral robe bottom")
-
-#print_bonuses(player)
-print_gear(player)
-print_roll(player)
-print_max(player)
-
-
-# Attack with the weapon, reducing the cooldown
-player.attack()
-
-# Simulate a few game ticks
-for _ in range(3):
-    player.tick()
-    print(f"Tick passed. {player.attack_cooldown} ticks remaining on cooldown.")
-
-# Attempt to attack again
-player.attack()
-
-# Simulate more ticks and attack again
-player.tick()
-player.tick()
-player.attack()
-"""
