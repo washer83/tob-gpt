@@ -36,7 +36,8 @@ class VerzikP2:
         self.hp -= damage
         self.hp = max(0, self.hp)
         if damage > 0:
-            print(f"Verzik takes {damage} damage. HP left: {self.hp}")
+            #print(f"Verzik takes {damage} damage. HP left: {self.hp}")
+            pass
         return self.hp <= 0
     
     # Defense rolls per style
@@ -56,7 +57,7 @@ class VerzikP2:
         """Verzik performs an attack based on the current tick and cycle."""
         # Check if Verzik's HP is below 35% before performing the attack
         if self.hp <= self.reds_threshold:
-            print("Verzik's HP is below 35%. Phase 2 ends.")
+            #print("Verzik's HP is below 35%. Phase 2 ends.")
             self.phase_active = False
             return
 
@@ -64,12 +65,12 @@ class VerzikP2:
 
         if attack_type == 'C':
             # Cabbage attack (regular attack)
-            print(f"Verzik throws a cabbage!")
+            #print(f"Verzik throws a cabbage!")
             return
 
         elif attack_type == 'L':
             # Lightning attack (deals damage to Verzik)
-            print(f"Verzik shoots a lightning attack and takes {self.lightning_damage} damage!")
+            #print(f"Verzik shoots a lightning attack and takes {self.lightning_damage} damage!")
             self.take_damage(self.lightning_damage)
             return
 
@@ -89,29 +90,12 @@ class VerzikP2:
                 self.current_attack_index = (self.current_attack_index + 1) % len(self.attack_pattern)
                 self.ticks_since_last_attack = 0  # Reset the attack cooldown
             else:
-                print(f"Verzik is on cooldown. {self.attack_cooldown_ticks - self.ticks_since_last_attack} tick(s) remaining.")
+                #print(f"Verzik is on cooldown. {self.attack_cooldown_ticks - self.ticks_since_last_attack} tick(s) remaining.")
                 self.ticks_since_last_attack += 1
         else:
             self.phase_active = False
-            print("Verzik P2 has been defeated.")
+            #print("Verzik P2 has been defeated.")
 
     def is_phase_active(self):
         """Check if phase 2 is still active."""
         return self.phase_active  # Return the phase's active status  
-
-"""
-verzik = VerzikP2(scale=3)
-
-tick = 0
-while verzik.is_phase_active():
-    print(f"Tick {tick+1}:")
-    if tick%5 == 0:
-        player_damage = random.randint(0,100)
-    else:
-        player_damage = 0
-    verzik.simulate_tick(player_damage)
-    tick += 1
-    if not verzik.is_phase_active():
-        print("!!! Reds Spawned !!!\n")
-        print(f"HP Proc: {verzik.hp/verzik.base_hp * 100}%")
-"""
