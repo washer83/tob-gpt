@@ -42,7 +42,50 @@ class AttackHandler:
         else:
             return False
         
+    def calculate_scythe_damage(self, max_hit: int) -> int:
+        """Calculate scythe damage."""
+        hit1 = hit2 = hit3 = 0
+        max_hit1 = max_hit
+        max_hit2 = math.floor(max_hit1/2)
+        max_hit3 = math.floor(max_hit2/2)
+
+        boss_defense_roll = self.calculate_boss_defense_roll()
+
+        # First hit:
+        if random.randint(0, self.calculate_hit_roll()) > random.randint(0, boss_defense_roll):
+            hit1 = random.randint(0, max_hit1)
+            if hit1 == 0:
+                hit1 = 1 
+        else:
+            hit1 = 0
+        
+        # Second hit:
+        if random.randint(0, self.calculate_hit_roll()) > random.randint(0, boss_defense_roll):
+            hit2 = random.randint(0, max_hit2)
+            if hit2 == 0:
+                hit2 = 1
+        else:
+            hit2 = 0
+
+        # Third hit: 
+        if random.randint(0, self.calculate_hit_roll()) > random.randint(0, boss_defense_roll):
+            hit3 = random.randint(0, max_hit3)
+            if hit3 == 0:
+                hit3 = 1
+        else:
+            hit3 = 0
+
+        total_damage = hit1 + hit2 + hit3
+        return total_damage
+
     def calculate_damage(self) -> int:
+
+        max_hit = self.calculate_max_hit()
+
+        if self.player.gear.get("weapon") == "Scythe of vitur":
+            return self.calculate_scythe_damage(max_hit)
+        
+        #normal hits
         if self.calculate_hit():
             max_hit = self.calculate_max_hit()
             hit = random.randint(0, max_hit)
@@ -55,12 +98,12 @@ class AttackHandler:
     def perform_attack(self):
         if self.player.attack():
             damage = self.calculate_damage()
-            if damage > 0:
-                print(f"{self.player.name} hits {self.boss.__class__.__name__} for {damage} dmg!")
-            else:
-                print(f"{self.player.name} missed!")
+            #if damage > 0:
+            #    print(f"{self.player.name} hits {self.boss.__class__.__name__} for {damage} dmg!")
+            #else:
+            #    print(f"{self.player.name} missed!")
             return damage
 
         else:
-            print(f"Player on cooldown. CD: {self.player.attack_cooldown}")
+            #print(f"Player on cooldown. CD: {self.player.attack_cooldown}")
             return 0
