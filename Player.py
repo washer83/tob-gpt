@@ -186,7 +186,10 @@ class Player:
         # Add flat magic level bonuses (e.g., +9 for magic)
         effective_level += 9
         effective_level = math.floor(effective_level)
-
+        #print(f"EFFECTIVE LEVEL: {effective_level}")
+        #print(f"ATTACK STYLE: {self.attack_style}")
+        #print(f"EQUIPMENT BONUS: {equipment_bonus}")
+        #print(f"MAGIC ATTACK ROLL: {effective_level * (equipment_bonus + 64)}")
         return effective_level * (equipment_bonus + 64)
     
     def calculate_melee_max_hit(self) -> int:
@@ -235,6 +238,9 @@ class Player:
             next((i['bonuses'].get('ranged_str', 0) for i in self.equipment_data if i['name'] == item), 0)
             for item in self.gear.values()
         )
+
+        if self.gear.get("weapon") == "Toxic blowpipe": # Assume dragon darts
+            ranged_strength_bonus += 35
 
         final_max_hit = 0.5 + ((effective_ranged_str * (ranged_strength_bonus + 64))/640)
         return math.floor(final_max_hit)
@@ -304,12 +310,15 @@ class Player:
     def get_weapon_speed(self):
         """Returns the speed (in ticks) of the currently equipped weapon."""
         weapon = self.gear.get("weapon", None)
-        if not weapon:
-            return 4  # Default to 4-tick speed for bare hands
-        
-        # Assuming your equipment data has a 'speed' attribute for each weapon
-        return next((i['speed'] for i in self.equipment_data if i['name'] == weapon), 4)
 
+        if weapon == "Toxic blowpipe": 
+            print("getting bp weapon speed")
+            return 2  # Ensure blowpipe always sets a 2-tick cooldown
+        elif not weapon:
+            return 4  # Default speed
+        else:
+            # Assuming your equipment data has a 'speed' attribute for each weapon
+            return next((i['speed'] for i in self.equipment_data if i['name'] == weapon), 4)
 
     def tick(self):
         """Increments tick variables. This should be called every game tick."""
