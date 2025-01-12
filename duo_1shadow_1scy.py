@@ -23,6 +23,9 @@ def run_p2_simulation(_unused: int = 0) -> tuple:
     mager = create_player("Mager", loadouts["melee"])   # Start with melee gear
     ranger = create_player("Ranger", loadouts["melee"]) # Start with melee gear or "ranged"
 
+    mager.summon_thrall()
+    ranger.summon_thrall()
+
     # Track total damage done by each player
     total_mager_damage = 0
     total_ranger_damage = 0
@@ -113,9 +116,11 @@ def run_p2_simulation(_unused: int = 0) -> tuple:
 
         # Check if done
         if not verzik.is_phase_active():
+            print(f"HP Proc: {round(verzik.hp / verzik.base_hp * 100, 2)}%")
+            proc = round(verzik.hp / verzik.base_hp * 100, 2)
             break
 
-    return (ticks_elapsed, total_mager_damage, total_ranger_damage)
+    return (ticks_elapsed, total_mager_damage, total_ranger_damage, proc)
 
 
 def run_multiple_simulations_parallel(num_iterations=10, output_csv="p2_results.csv"):
@@ -133,7 +138,7 @@ def run_multiple_simulations_parallel(num_iterations=10, output_csv="p2_results.
             # We pass a range(num_iterations) so each worker has a separate job.
             # `_unused` can be used for seeding or scenario indexing if needed.
             # We'll enumerate the results, starting at 1, for iteration counting.
-            for iteration, (ticks_elapsed, mager_dmg, ranger_dmg) in enumerate(
+            for iteration, (ticks_elapsed, mager_dmg, ranger_dmg, proc) in enumerate(
                 tqdm(pool.imap(run_p2_simulation, range(num_iterations)), 
                      total=num_iterations),
                 start=1
@@ -143,7 +148,8 @@ def run_multiple_simulations_parallel(num_iterations=10, output_csv="p2_results.
                     iteration,
                     ticks_elapsed,
                     mager_dmg,
-                    ranger_dmg
+                    ranger_dmg,
+                    proc
                 ])
 
                 # Print or log if you want
@@ -164,18 +170,19 @@ def run_multiple_simulations_series(num_iterations=100, output_csv="p2_results.c
 
         for iteration in range(1, num_iterations + 1):
             # Run the simulation
-            ticks_elapsed, mager_dmg, ranger_dmg = run_p2_simulation()
+            ticks_elapsed, mager_dmg, ranger_dmg, proc = run_p2_simulation()
             
             # Write a row
             writer.writerow([
                 iteration,
                 ticks_elapsed,
                 mager_dmg,
-                ranger_dmg
+                ranger_dmg,
+                proc
             ])
 
     print(f"Done! Results written to {output_csv}.")
 
 
 if __name__ == "__main__":
-    run_multiple_simulations_parallel(num_iterations=1000, output_csv="verzik/results/duo/duo_1scy_1shadow_8way.csv")
+    run_multiple_simulations_parallel(num_iterations=1000, output_csv="verzik/results/duo/duo_1scy_1shadow_8way_thrall.csv")

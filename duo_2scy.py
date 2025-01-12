@@ -20,8 +20,11 @@ def run_p2_simulation(_unused: int = 0) -> tuple:
     # -------------------------------
     # 2. Create players
     # -------------------------------
-    mager = create_player("Mager", loadouts["melee_bf"])   # Start with melee gear
-    ranger = create_player("Ranger", loadouts["melee_bf"]) # Start with melee gear or "ranged"
+    mager = create_player("Mager", loadouts["melee"])   # Start with melee gear
+    ranger = create_player("Ranger", loadouts["melee"]) # Start with melee gear or "ranged"
+
+    mager.summon_thrall()
+    ranger.summon_thrall()
 
     # Track total damage done by each player
     total_mager_damage = 0
@@ -107,9 +110,10 @@ def run_p2_simulation(_unused: int = 0) -> tuple:
 
         # Check if done
         if not verzik.is_phase_active():
+            proc = round(verzik.hp / verzik.base_hp * 100, 2)
             break
 
-    return (ticks_elapsed, total_mager_damage, total_ranger_damage)
+    return (ticks_elapsed, total_mager_damage, total_ranger_damage, proc)
 
 
 def run_multiple_simulations(num_iterations=10, output_csv="p2_results.csv"):
@@ -127,7 +131,7 @@ def run_multiple_simulations(num_iterations=10, output_csv="p2_results.csv"):
             # We pass a range(num_iterations) so each worker has a separate job.
             # `_unused` can be used for seeding or scenario indexing if needed.
             # We'll enumerate the results, starting at 1, for iteration counting.
-            for iteration, (ticks_elapsed, mager_dmg, ranger_dmg) in enumerate(
+            for iteration, (ticks_elapsed, mager_dmg, ranger_dmg, proc) in enumerate(
                 tqdm(pool.imap(run_p2_simulation, range(num_iterations)), 
                      total=num_iterations),
                 start=1
@@ -137,7 +141,8 @@ def run_multiple_simulations(num_iterations=10, output_csv="p2_results.csv"):
                     iteration,
                     ticks_elapsed,
                     mager_dmg,
-                    ranger_dmg
+                    ranger_dmg,
+                    proc
                 ])
 
                 # Print or log if you want
@@ -147,5 +152,5 @@ def run_multiple_simulations(num_iterations=10, output_csv="p2_results.csv"):
 
 
 if __name__ == "__main__":
-    run_multiple_simulations(num_iterations=1000, output_csv="verzik/results/duo/duo_2scy_bf_results.csv")
+    run_multiple_simulations(num_iterations=1000, output_csv="verzik/results/duo/duo_2scy_rancour_thrall_results.csv")
     print("Done! Check your p2_results.csv file for results.")
